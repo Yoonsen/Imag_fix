@@ -35,6 +35,16 @@ def geo_locations(dhlabid):
         data = pd.DataFrame()
     return data
 
+def geo_locations_corpus(dhlabids):
+    res = requests.post(f"{dh.constants.BASE_URL}/imagination_geo_data_list", json={"dhlabids":list(dhlabids)})
+    if res.status_code == 200:
+        data = pd.read_json(StringIO(res.text))
+    else:
+        print(res.status_code)
+        data = pd.DataFrame()
+    return data
+
+
 def make_collocation_graph(corpus, target_word, top=15, before=4, after=4, ref = None, limit=1000):
     """Make a cascaded network of collocations ref is a frequency list"""
     
